@@ -1,0 +1,14 @@
+{
+  "name": "@swr-cache/core",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/jonyw4/swr-cache",
+  "author": "Jonathan Célio <jonathan.clio@hotmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "preview-publish": "tar tvf $(npm pack)",
+    "build": "node build && tsc --project tsconfig.build.json",
+    "test:unit": "vitest run tests/unit --coverage"
+  }
+}
