@@ -9,6 +9,7 @@
   "scripts": {
     "preview-publish": "tar tvf $(npm pack)",
     "build": "node build && tsc --project tsconfig.build.json",
-    "test:unit": "vitest run tests/unit --coverage"
+    "test:unit": "vitest run tests/unit --coverage",
+    "test:unit:watch": "vitest tests/unit"
   }
 }
