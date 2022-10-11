@@ -2,7 +2,6 @@ type CacheUpdatingStatus = 'parked' | 'revalidating'
 
 export interface CacheDetailsProps {
   key: string
-  hash: string
   createdAt: Date
   minTimeToStale: number
   updatingStatus: CacheUpdatingStatus
@@ -22,9 +21,6 @@ export class CacheDetails {
   }
   get key(): string{
     return this.props.key
-  }
-  get hash(): string{
-    return this.props.hash
   }
   get createdAt(): Date {
     return this.props.createdAt

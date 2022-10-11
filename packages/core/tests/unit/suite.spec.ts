@@ -42,7 +42,6 @@ describe('SUT', () => {
       it('should return the cached content without revalidating', async () => {
         await cacheDetailsRepository.save(new CacheDetails({
           key: 'test',
-          hash: '123',
           createdAt: new Date(2022, 0, 1),
           minTimeToStale: 2000,
           updatingStatus: 'parked',
@@ -71,7 +70,6 @@ describe('SUT', () => {
       it('should return the content and revalidate', async () => {
         await cacheDetailsRepository.save(new CacheDetails({
           key: 'test',
-          hash: '123',
           createdAt: new Date(2022, 0, 1),
           minTimeToStale: 1000,
           updatingStatus: 'parked',
@@ -101,7 +99,6 @@ describe('SUT', () => {
       it('should return the content and not revalidate when is already updating in proccess', async () => {
         await cacheDetailsRepository.save(new CacheDetails({
           key: 'test',
-          hash: '123',
           createdAt: new Date(2022, 0, 1),
           minTimeToStale: 1000,
           updatingStatus: 'revalidating',

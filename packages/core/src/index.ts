@@ -36,7 +36,6 @@ export class StaleWhileRevalidateCache {
   private async revalidate(cacheDetails: CacheDetails, callback: Function): Promise<void> {
     const newCacheDetails = new CacheDetails({
       key: cacheDetails.key,
-      hash: cacheDetails.hash,
       createdAt: cacheDetails.createdAt,
       minTimeToStale: cacheDetails.minTimeToStale,
       updatingStatus: 'revalidating'
@@ -54,7 +53,6 @@ export class StaleWhileRevalidateCache {
 
     const cacheDetails = new CacheDetails({
       key,
-      hash: '123',
       createdAt: new Date(),
       updatingStatus: 'revalidating',
       minTimeToStale
