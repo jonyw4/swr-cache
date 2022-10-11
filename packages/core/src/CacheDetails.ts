@@ -1,17 +1,21 @@
-type CacheStatus = 'valid' | 'revalidating'
+type CacheUpdatingStatus = 'parked' | 'revalidating'
 
 export interface CacheDetailsProps {
   key: string
   hash: string
   createdAt: Date
-  maxTimeToLive: number
-  status: CacheStatus
+  minTimeToStale: number
+  updatingStatus: CacheUpdatingStatus
 }
 
 export class CacheDetails {
   constructor(private props: CacheDetailsProps){}
   isStale(): boolean {
-    return false
+    const nowTime = Date.now()
+    const createdAtTime = this.props.createdAt.getTime()
+    const cachedAge = nowTime - createdAtTime
+
+    return cachedAge >= this.minTimeToStale
   }
   get key(): string{
     return this.props.key
@@ -22,10 +26,10 @@ export class CacheDetails {
   get createdAt(): Date {
     return this.props.createdAt
   }
-  get maxTimeToLive(): number {
-    return this.props.maxTimeToLive
+  get minTimeToStale(): number {
+    return this.props.minTimeToStale
   }
-  get status(): CacheStatus {
-    return this.props.status
+  get updatingStatus(): CacheUpdatingStatus {
+    return this.props.updatingStatus
   }
 }
