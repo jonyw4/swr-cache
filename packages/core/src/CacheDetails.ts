@@ -17,6 +17,9 @@ export class CacheDetails {
 
     return cachedAge >= this.minTimeToStale
   }
+  needsRevalidation(): boolean {
+    return this.isStale() && this.updatingStatus === 'parked'
+  }
   get key(): string{
     return this.props.key
   }

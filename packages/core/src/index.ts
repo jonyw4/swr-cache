@@ -24,7 +24,7 @@ export class StaleWhileRevalidateCache {
     if(cacheDetails){
       const content = await this.config.cacheContentRepository.getByKey(key) as string
 
-      if(cacheDetails.isStale()){
+      if(cacheDetails.needsRevalidation()){
         this.revalidate(cacheDetails, callback)
       }
 
