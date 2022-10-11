@@ -11,26 +11,30 @@ interface Config {
 interface HandleConfig {
   key: string
   minTimeToStale: number
-  maxAge: 10
+  maxTimeToLive: 10
   callback: Function
 }
 
 
 export class StaleWhileRevalidateCache {
   constructor(private config: Config){}
-  async handle({callback, key}: HandleConfig): Promise<CacheItem> {
+  async handle({callback, key, maxTimeToLive}: HandleConfig): Promise<CacheItem> {
+    const currentCacheDetails = await this.config.cacheDetailsRepository.getByKey(key)
+
+    if(currentCacheDetails){
+      const content = await this.config.cacheContentRepository.getByKey(key) as string
+      return { details: currentCacheDetails, content }
+    }
     
     const cacheContent = await callback()
 
-    const cacheDetails: CacheDetails = {
+    const cacheDetails = new CacheDetails({
       key: key,
       hash: '123',
       createdAt: new Date(),
-      maxAge: new Date(),
-      status: 'valid',
-      isStale: true,
-      isExpired: true
-    }
+      maxTimeToLive: maxTimeToLive,
+      status: 'valid'
+    })
 
     const cacheItem: CacheItem = { details: cacheDetails, content: cacheContent }
 
@@ -45,6 +49,7 @@ export class StaleWhileRevalidateCache {
 }
 
 export {
+  CacheDetails,
   CacheDetailsRepository,
   CacheContentRepository
 }
