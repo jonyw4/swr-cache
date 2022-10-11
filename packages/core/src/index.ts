@@ -1,11 +1,11 @@
 import { CacheDetails } from "./CacheDetails"
 import { CacheItem } from "./CacheItem"
-import { CacheDetailsRepository, CacheItemRepository } from './repositories'
+import { CacheDetailsRepository, CacheContentRepository } from './repositories'
 
 
 interface Config {
   cacheDetailsRepository: CacheDetailsRepository
-  cacheItemRepository: CacheItemRepository
+  cacheContentRepository: CacheContentRepository
 }
 
 interface HandleConfig {
@@ -20,7 +20,7 @@ export class StaleWhileRevalidateCache {
   constructor(private config: Config){}
   async handle({callback, key}: HandleConfig): Promise<CacheItem> {
     
-    const data = await callback()
+    const cacheContent = await callback()
 
     const cacheDetails: CacheDetails = {
       key: key,
@@ -32,10 +32,13 @@ export class StaleWhileRevalidateCache {
       isExpired: true
     }
 
-    const cacheItem: CacheItem = { details: cacheDetails, value: data }
+    const cacheItem: CacheItem = { details: cacheDetails, content: cacheContent }
 
     await this.config.cacheDetailsRepository.save(cacheDetails)
-    await this.config.cacheItemRepository.save(cacheItem)
+    await this.config.cacheContentRepository.saveByKey(
+      cacheDetails.key, 
+      cacheContent
+    )
 
     return cacheItem
   }
@@ -43,6 +46,6 @@ export class StaleWhileRevalidateCache {
 
 export {
   CacheDetailsRepository,
-  CacheItemRepository
+  CacheContentRepository
 }
 export * from './infra'

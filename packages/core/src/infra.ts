@@ -1,6 +1,5 @@
 import { CacheDetails } from './CacheDetails';
-import { CacheItem } from './CacheItem';
-import { CacheDetailsRepository, CacheItemRepository } from './repositories'
+import { CacheDetailsRepository, CacheContentRepository } from './repositories'
 
 export class InMemoryCacheDetailsRepository implements CacheDetailsRepository {
   private list = {}
@@ -13,12 +12,12 @@ export class InMemoryCacheDetailsRepository implements CacheDetailsRepository {
   
 }
 
-export class InMemoryCacheItemRepository implements CacheItemRepository {
+export class InMemoryCacheContentRepository implements CacheContentRepository {
   private list = {}
   async getByKey(key: string): Promise<string> {
     return this.list[key]
   }
-  async save(cacheItem: CacheItem): Promise<void> {
-    this.list[cacheItem.details.key] = cacheItem
+  async saveByKey(key: string, content: string): Promise<void> {
+    this.list[key] = content
   }
 }
