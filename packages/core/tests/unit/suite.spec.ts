@@ -1,5 +1,9 @@
 import { it, describe, expect, beforeEach, afterEach, vi } from 'vitest'
-import { StaleWhileRevalidateCache, InMemoryCacheDetailsRepository, InMemoryCacheContentRepository, CacheDetailsRepository, CacheContentRepository, CacheDetails } from '../../src'
+import { createStaleWhileRevalidateCache, StaleWhileRevalidateCache, InMemoryCacheDetailsRepository, InMemoryCacheContentRepository, CacheDetailsRepository, CacheContentRepository, CacheDetails } from '../../src'
+
+const DATE_TEST_BASELINE = new Date(2022, 0, 1)
+
+const callback = () => new Date().toISOString()
 
 describe('SUT', () => {
   let swr: StaleWhileRevalidateCache
@@ -8,10 +12,11 @@ describe('SUT', () => {
 
   beforeEach(() => {
     vi.useFakeTimers()
-    vi.setSystemTime(new Date(2022, 0, 1))
+    vi.setSystemTime(DATE_TEST_BASELINE)
     cacheDetailsRepository = new InMemoryCacheDetailsRepository()
     cacheContentRepository = new InMemoryCacheContentRepository()
-    swr = new StaleWhileRevalidateCache({
+    
+    swr = createStaleWhileRevalidateCache({
       cacheDetailsRepository,
       cacheContentRepository
     })
@@ -24,7 +29,7 @@ describe('SUT', () => {
       const output = await swr.handle({
         key: 'test',
         minTimeToStale: 1,
-        callback: () => new Date().toISOString()
+        callback
       })
 
       expect(output.content).toBe('2022-01-01T03:00:00.000Z')
@@ -42,7 +47,7 @@ describe('SUT', () => {
       it('should return the cached content without revalidating', async () => {
         await cacheDetailsRepository.save(new CacheDetails({
           key: 'test',
-          createdAt: new Date(2022, 0, 1),
+          createdAt: DATE_TEST_BASELINE,
           minTimeToStale: 2000,
           updatingStatus: 'parked',
         }))
@@ -53,7 +58,7 @@ describe('SUT', () => {
         const output = await swr.handle({
           key: 'test',
           minTimeToStale: 2000,
-          callback: () => new Date().toISOString()
+          callback
         })
   
         expect(output.content).toBe('2022-01-01T03:00:00.000Z')
@@ -70,7 +75,7 @@ describe('SUT', () => {
       it('should return the content and revalidate', async () => {
         await cacheDetailsRepository.save(new CacheDetails({
           key: 'test',
-          createdAt: new Date(2022, 0, 1),
+          createdAt: DATE_TEST_BASELINE,
           minTimeToStale: 1000,
           updatingStatus: 'parked',
         }))
@@ -81,7 +86,7 @@ describe('SUT', () => {
         const output = await swr.handle({
           key: 'test',
           minTimeToStale: 1000,
-          callback: () => new Date().toISOString()
+          callback
         })
   
         expect(output.content).toBe('2022-01-01T03:00:00.000Z')
@@ -99,7 +104,7 @@ describe('SUT', () => {
       it('should return the content and not revalidate when is already updating in proccess', async () => {
         await cacheDetailsRepository.save(new CacheDetails({
           key: 'test',
-          createdAt: new Date(2022, 0, 1),
+          createdAt: DATE_TEST_BASELINE,
           minTimeToStale: 1000,
           updatingStatus: 'revalidating',
         }))
@@ -110,7 +115,7 @@ describe('SUT', () => {
         const output = await swr.handle({
           key: 'test',
           minTimeToStale: 1000,
-          callback: () => new Date().toISOString()
+          callback
         })
   
         expect(output.content).toBe('2022-01-01T03:00:00.000Z')

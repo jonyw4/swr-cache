@@ -1,4 +1,4 @@
-import { CacheDetails } from "./CacheDetails"
+import { CacheDetails } from "./domain"
 
 export interface CacheDetailsRepository {
   getByKey(key: string): Promise<CacheDetails | void>

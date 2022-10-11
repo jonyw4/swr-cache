@@ -1,4 +1,4 @@
-import { CacheDetails } from './CacheDetails';
+import { CacheDetails } from './domain';
 import { CacheDetailsRepository, CacheContentRepository } from './repositories'
 
 export class InMemoryCacheDetailsRepository implements CacheDetailsRepository {
