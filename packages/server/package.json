@@ -1,0 +1,23 @@
+{
+  "name": "@swr-cache/server",
+  "version": "1.0.0",
+  "types": "dist/types/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "files": [
+    "dist/*"
+  ],
+  "repository": "https://github.com/jonyw4/swr-cache",
+  "author": "Jonathan Célio <jonathan.clio@hotmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "preview-publish": "tar tvf $(npm pack)",
+    "build": "node build && tsc --project tsconfig.build.json",
+    "test:unit": "vitest run tests/unit --coverage",
+    "test:unit:watch": "vitest tests/unit"
+  },
+  "dependencies": {
+    "@swr-cache/core": "1.0.0"
+  }
+}
