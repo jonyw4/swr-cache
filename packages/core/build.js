@@ -5,8 +5,7 @@ const defaultBuildConfig = {
   entryPoints: ['./src/index.ts'],
   bundle: true,
   loader: { '.ts': 'ts' },
-  define: {},
-  minify: true,
+  define: {}
 }
 
 const buildConfigForCommonJs = {
