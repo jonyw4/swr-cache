@@ -8,7 +8,8 @@
   "private": true,
   "workspaces": [
     "packages/core",
-    "packages/node"
+    "packages/server",
+    "packages/nuxt3"
   ],
   "devDependencies": {
     "@types/node": "^18.8.3",
@@ -16,7 +17,8 @@
     "typescript": "^4.8.4",
     "vite": "^3.1.7",
     "vitest": "^0.24.1",
-    "@vitest/coverage-c8": "^0.24.1"
+    "@vitest/coverage-c8": "^0.24.1",
+    "eslint": "latest"
   },
   "engines" : { 
     "npm" : ">=8.0.0 <9.0.0",
