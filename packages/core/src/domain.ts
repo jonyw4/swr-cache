@@ -41,5 +41,5 @@ export class CacheDetails {
 
 export interface CacheItem {
   details: CacheDetails
-  content: string
+  getContent: () => Promise<string | void>
 }

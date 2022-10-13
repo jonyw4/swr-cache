@@ -15,7 +15,7 @@ interface Input {
 export class CreateCache {
   constructor(private deps: Deps) {}
 
-  async handle({ callback, key, minTimeToStale }: Input){
+  async handle({ callback, key, minTimeToStale }: Input): Promise<void> {
     const cacheContent = await callback()
 
     const cacheDetails = new CacheDetails({
@@ -25,14 +25,10 @@ export class CreateCache {
       minTimeToStale
     })
 
-    const cacheItem: CacheItem = { details: cacheDetails, content: cacheContent }
-
     await this.deps.cacheDetailsRepository.save(cacheDetails)
     await this.deps.cacheContentRepository.saveByKey(
       cacheDetails.key, 
       cacheContent
     )
-
-    return cacheItem
   }
 }

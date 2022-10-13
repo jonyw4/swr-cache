@@ -22,16 +22,16 @@ export class StaleWhileRevalidateCache {
     const { key, callback } = handleConfig
     const cacheDetails = await this.deps.cacheDetailsRepository.getByKey(key)
 
-    if(cacheDetails){
-      const content = await this.deps.cacheContentRepository.getByKey(key) as string
+    if(!cacheDetails){
+      await this.deps.createCache.handle(handleConfig)
 
-      if(cacheDetails.needsRevalidation()){
-        this.deps.revalidateCache.handle({ cacheDetails, callback })
-      }
-
-      return { details: cacheDetails, content }
+      return this.handle(handleConfig)
     }
-    
-    return this.deps.createCache.handle(handleConfig)
+
+    if(cacheDetails.needsRevalidation()){
+      this.deps.revalidateCache.handle({ cacheDetails, callback })
+    }
+
+    return { details: cacheDetails, getContent: () => this.deps.cacheContentRepository.getByKey(key) }
   }
 }

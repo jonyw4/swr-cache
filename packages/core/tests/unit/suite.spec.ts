@@ -26,13 +26,13 @@ describe('SUT', () => {
   })
   describe('Giving an empty cache', () => {
     it('should return the content and cache it', async () => {
-      const output = await swr.handle({
+      const cache = await swr.handle({
         key: 'test',
         minTimeToStale: 1,
         callback
       })
 
-      expect(output.content).toBe('2022-01-01T03:00:00.000Z')
+      expect(await cache.getContent()).toBe('2022-01-01T03:00:00.000Z')
 
       const cacheDetails = await cacheDetailsRepository.getByKey('test') as CacheDetails
       const cacheContent = await cacheContentRepository.getByKey('test') as string
@@ -55,13 +55,13 @@ describe('SUT', () => {
 
         vi.setSystemTime(new Date(2022, 0, 1, 0 , 0, 1, 0))
 
-        const output = await swr.handle({
+        const cache = await swr.handle({
           key: 'test',
           minTimeToStale: 2000,
           callback
         })
   
-        expect(output.content).toBe('2022-01-01T03:00:00.000Z')
+        expect(await cache.getContent()).toBe('2022-01-01T03:00:00.000Z')
   
         const cacheDetails = await cacheDetailsRepository.getByKey('test') as CacheDetails
         const cacheContent = await cacheContentRepository.getByKey('test') as string
@@ -83,13 +83,13 @@ describe('SUT', () => {
 
         vi.setSystemTime(new Date(2022, 0, 1, 0 , 0, 1, 0))
 
-        const output = await swr.handle({
+        const cache = await swr.handle({
           key: 'test',
           minTimeToStale: 1000,
           callback
         })
   
-        expect(output.content).toBe('2022-01-01T03:00:00.000Z')
+        expect(await cache.getContent()).toBe('2022-01-01T03:00:00.000Z')
 
         await new Promise(process.nextTick);
   
@@ -112,13 +112,13 @@ describe('SUT', () => {
 
         vi.setSystemTime(new Date(2022, 0, 1, 0 , 0, 1, 0))
 
-        const output = await swr.handle({
+        const cache = await swr.handle({
           key: 'test',
           minTimeToStale: 1000,
           callback
         })
   
-        expect(output.content).toBe('2022-01-01T03:00:00.000Z')
+        expect(await cache.getContent()).toBe('2022-01-01T03:00:00.000Z')
 
         await new Promise(process.nextTick);
   

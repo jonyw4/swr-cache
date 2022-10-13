@@ -19,7 +19,7 @@ const buildConfigForCommonJs = {
 const buildConfigForEsm = {
   ...defaultBuildConfig,
   outfile: path.resolve(__dirname, 'dist/esm/index.js'),
-  platform: 'browser',
+  platform: 'neutral',
   target: 'esnext',
   format: 'esm',
 }
