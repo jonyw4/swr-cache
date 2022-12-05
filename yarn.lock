@@ -4448,6 +4448,15 @@ postcss@^8.1.10, postcss@^8.4.16:
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
+postcss@^8.4.18:
+  version "8.4.19"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.19.tgz#61178e2add236b17351897c8bcc0b4c8ecab56fc"
+  integrity sha512-h+pbPsyhlYj6N2ozBmHhHrs9DzGmbaarbLvWipMRO7RLS+v4onj26MPFXA5OBYFxyqYhUJK456SwDcY9H2/zsA==
+  dependencies:
+    nanoid "^3.3.4"
+    picocolors "^1.0.0"
+    source-map-js "^1.0.2"
+
 pretty-bytes@^5.6.0:
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-5.6.0.tgz#356256f643804773c82f64723fe78c92c62beaeb"
@@ -4687,7 +4696,7 @@ rollup-pluginutils@^2.8.2:
   dependencies:
     estree-walker "^0.6.1"
 
-rollup@^2.66.1, rollup@^2.79.0:
+rollup@^2.66.1, rollup@^2.79.0, rollup@^2.79.1:
   version "2.79.1"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.79.1.tgz#bedee8faef7c9f93a2647ac0108748f497f081c7"
   integrity sha512-uKxbd0IhMZOhjAiD5oAFp7BqvkA4Dv47qpOCtaNvng4HBwdbWtdOh8f5nZNuk2rp51PMGk3bzfWu5oayNEuYnw==
@@ -5481,15 +5490,15 @@ vite-plugin-checker@^0.5.1:
     vscode-languageserver-textdocument "^1.0.1"
     vscode-uri "^3.0.2"
 
-vite@3.1.8:
-  version "3.1.8"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-3.1.8.tgz#fa29144167d19b773baffd65b3972ea4c12359c9"
-  integrity sha512-m7jJe3nufUbuOfotkntGFupinL/fmuTNuQmiVE7cH2IZMuf4UbfbGYMUT3jVWgGYuRVLY9j8NnrRqgw5rr5QTg==
+vite@3.2.5:
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-3.2.5.tgz#dee5678172a8a0ab3e547ad4148c3d547f90e86a"
+  integrity sha512-4mVEpXpSOgrssFZAOmGIr85wPHKvaDAcXqxVxVRZhljkJOMZi1ibLibzjLHzJvcok8BMguLc7g1W6W/GqZbLdQ==
   dependencies:
     esbuild "^0.15.9"
-    postcss "^8.4.16"
+    postcss "^8.4.18"
     resolve "^1.22.1"
-    rollup "~2.78.0"
+    rollup "^2.79.1"
   optionalDependencies:
     fsevents "~2.3.2"
 
